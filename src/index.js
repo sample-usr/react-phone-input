@@ -466,7 +466,7 @@ class ReactPhoneInput extends React.Component {
       "arrow": true,
       "up": this.state.showDropDown
     });
-    let inputClasses = classNames({
+    let inputClasses = classNames(this.props.classNames, {
       "form-control": true,
       "invalid-number": !this.props.isValid(this.state.formattedNumber.replace(/\D/g, ''))
     });
@@ -552,6 +552,7 @@ ReactPhoneInput.defaultProps = {
   defaultCountry: allCountries[0].iso2,
   isValid: isNumberValid,
   flagsImagePath: './flags.png',
+  classNames: '',
   onEnterKeyPress: function () {}
 };
 
@@ -564,15 +565,16 @@ ReactPhoneInput.propTypes = {
     onChange: React.PropTypes.func,
     onFocus: React.PropTypes.func,
     onClick: React.PropTypes.func,
-    onKeyDown: React.PropTypes.func
+    onKeyDown: React.PropTypes.func,
+    classNames: React.PropTypes.string
 };
 
 export default ReactPhoneInput;
 
 if (__DEV__) {
   const ReactDOM = require('react-dom');
-  
+
   ReactDOM.render(
-    <ReactPhoneInput defaultCountry={'us'} preferredCountries={['us', 'de']} excludeCountries={'in'}/>,
+    <ReactPhoneInput defaultCountry={'us'} preferredCountries={['us', 'de']} excludeCountries={'in'} classNames={'app-Form-input'}/>,
     document.getElementById('content'));
 }
