@@ -43,7 +43,9 @@
     "webpack-merge": "^0.13.0"
   },
   "dependencies": {
-    "classnames": "^2.1.5"
+    "classnames": "^2.1.5",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2"
   },
   "peerDependencies": {
     "lodash": "^4.11.1",
