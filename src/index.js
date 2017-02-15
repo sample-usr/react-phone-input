@@ -132,6 +132,12 @@ class ReactPhoneInput extends React.Component {
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeydown);
   }
+	
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.defaultCountry && nextProps.defaultCountry !== this.props.defaultCountry) {
+      this.props.defaultCountry = nextProps.defaultCountry;
+    }
+  }
 
   scrollTo(country, middle) {
     if(!country) return;
