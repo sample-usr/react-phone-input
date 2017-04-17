@@ -134,6 +134,31 @@ class ReactPhoneInput extends React.Component {
     });
   }
 
+  updateFormattedNumber(number) {
+      let inputNumber = number;
+      let selectedCountry;
+      let formattedNumber = number;
+
+      // if inputNumber does not start with '+', then use default country's dialing prefix,
+      // otherwise use logic for finding country based on country prefix.
+      if (!inputNumber.startsWith('+')) {
+          const selectedCountryGuess = find(this.state.onlyCountries, {iso2: this.state.defaultCountry});
+          const dialCode = selectedCountryGuess && !startsWith(inputNumber.replace(/\D/g, ''), selectedCountryGuess.dialCode) ? selectedCountryGuess.dialCode : '';
+          selectedCountry = selectedCountryGuess;
+          formattedNumber = this.formatNumber(dialCode + inputNumber.replace(/\D/g, ''), selectedCountryGuess ? selectedCountryGuess.format : null);
+      }
+      else {
+         inputNumber = inputNumber.replace(/\D/g, '');
+         selectedCountry = this.guessSelectedCountry(inputNumber.substring(0, 6), this.state.onlyCountries, this.state.defaultCountry);
+         formattedNumber = this.formatNumber(inputNumber, selectedCountry.format);
+      }
+
+      this.setState({
+          selectedCountry: selectedCountry,
+          formattedNumber: formattedNumber
+      })
+  }
+
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeydown);
   }
@@ -143,9 +168,14 @@ class ReactPhoneInput extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('react-phone-input componentWillReceiveProps: ', nextProps);
     if (nextProps.defaultCountry &&
         nextProps.defaultCountry !== this.state.defaultCountry) {
           this.updateDefaultCountry(nextProps.defaultCountry);
+    }
+    if (nextProps.value &&
+        nextProps.value !== this.state.formattedNumber) {
+        this.updateFormattedNumber(nextProps.value);
     }
   }
 
