@@ -150,7 +150,8 @@ var rawAllCountries = [
     [
       "Brazil",
       "br",
-      "55"
+      "55",
+      "+.. (..) ?....-...."
     ],
     [
       "British Indian Ocean Territory",
@@ -1260,7 +1261,7 @@ function addCountryCode (iso2, dialCode, priority) {
 
 for (let i = 0; i < rawAllCountries.length; i++) {
     // countries
-    
+
     let c = rawAllCountries[i];
     allCountries.push({
       name: c[0],
@@ -1282,7 +1283,7 @@ for (let i = 0; i < rawAllCountries.length; i++) {
             // full dial code is country code + dial code
             var dialCode = c[2] + c[5][j];
             addCountryCode(c[1], dialCode);
-     
+
             let virtualCountry = Object.assign({},allCountries[countryIdx]);
             virtualCountry.dialCode = dialCode;
             allCountries.push(virtualCountry);

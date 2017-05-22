@@ -28,11 +28,30 @@ let keys = {
   SPACE: 32
 };
 
-function isNumberValid(inputNumber) {
-  let countries = countryData.allCountries;
-  return some(countries, function(country) {
-    return startsWith(inputNumber, country.dialCode) || startsWith(country.dialCode, inputNumber);
-  });
+
+function isNumberValid() {
+  var firstTime = true;
+  return function (inputNumber) {
+    if(firstTime) {
+      firstTime = false;
+      return true;
+    }
+    let countries = countryData.allCountries;
+    // check every country
+    for(let country of countries) {
+      // if country code matches the inputNumber code
+      if(startsWith(inputNumber, country.dialCode)) {
+        // if country has no format just return true
+        if(!country.format) return true
+        // test if the country format matches the inputNumber
+        // (by checking inputNumber's length vs number of '.' in format)
+        if(inputNumber.length >= country.format.split('').filter(x => x==='.').length) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 }
 
 function getOnlyCountries(onlyCountriesArray) {
@@ -197,12 +216,26 @@ class ReactPhoneInput extends React.Component {
       return `+${text}`;
     }
 
+    // Count of '.' characters in pattern
+    let patternDotCount = pattern.split('').filter(x => x==='.').length
+    // How many '?' should be replaced by numbers (if > 0)
+    let optionalNumberCount = text.length - patternDotCount
+
     let formattedObject = reduce(pattern, function(acc, character) {
       if(acc.remainingText.length === 0) {
           return acc;
       }
 
-      if(character !== '.') {
+      if(character === '?') {
+        if(optionalNumberCount-- > 0) {
+          return {
+            formattedText: acc.formattedText + head(acc.remainingText),
+            remainingText: tail(acc.remainingText)
+          };
+        } else {
+          return acc;
+        }
+      } else if(character !== '.') {
         return {
           formattedText: acc.formattedText + character,
           remainingText: acc.remainingText
@@ -214,7 +247,7 @@ class ReactPhoneInput extends React.Component {
         remainingText: tail(acc.remainingText)
       };
     }, {formattedText: '', remainingText: text.split('')});
-    return formattedObject.formattedText + formattedObject.remainingText.join('');
+    return formattedObject.formattedText;
   }
 
   // put the cursor to the end of the input (usually after a focus event)
@@ -484,7 +517,6 @@ class ReactPhoneInput extends React.Component {
       "form-control": true,
       "invalid-number": !this.props.isValid(this.state.formattedNumber.replace(/\D/g, ''))
     });
-
     let flagViewClasses = classNames({
       "flag-dropdown": true,
       "open-dropdown": this.state.showDropDown
@@ -563,7 +595,7 @@ ReactPhoneInput.defaultProps = {
   onlyCountries: [],
   excludeCountries: [],
   defaultCountry: allCountries[0].iso2,
-  isValid: isNumberValid,
+  isValid: isNumberValid(),
   flagsImagePath: './flags.png',
   onEnterKeyPress: function () {}
 };
@@ -587,7 +619,4 @@ if (__DEV__) {
   ReactDOM.render(
     <ReactPhoneInput defaultCountry='us' preferredCountries={['us', 'de']} excludeCountries={'in'}/>,
     document.getElementById('content'));
-  ReactDOM.render(
-      <ReactPhoneInput defaultCountry='de' preferredCountries={['it']}/>,
-      document.getElementById('content'));
 }
