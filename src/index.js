@@ -8,6 +8,7 @@ import React from 'react';
 import countryData from './country_data.js';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types'
 
 let allCountries = countryData.allCountries;
 
@@ -569,15 +570,15 @@ ReactPhoneInput.defaultProps = {
 };
 
 ReactPhoneInput.propTypes = {
-    value: React.PropTypes.string,
-    autoFormat: React.PropTypes.bool,
-    defaultCountry: React.PropTypes.string,
-    onlyCountries: React.PropTypes.arrayOf(React.PropTypes.string),
-    preferredCountries: React.PropTypes.arrayOf(React.PropTypes.string),
-    onChange: React.PropTypes.func,
-    onFocus: React.PropTypes.func,
-    onClick: React.PropTypes.func,
-    onKeyDown: React.PropTypes.func
+    value: PropTypes.string,
+    autoFormat: PropTypes.bool,
+    defaultCountry: PropTypes.string,
+    onlyCountries: PropTypes.arrayOf(PropTypes.string),
+    preferredCountries: PropTypes.arrayOf(PropTypes.string),
+    onChange: PropTypes.func,
+    onFocus: PropTypes.func,
+    onClick: PropTypes.func,
+    onKeyDown: PropTypes.func
 };
 
 export default ReactPhoneInput;
