@@ -134,7 +134,7 @@ class ReactPhoneInput extends React.Component {
   }
 
   getValue() {
-    return this.getNumber();
+    return this.state.formattedNumber.replace(/\D/g, '');
   }
 
   resetNumber() {
