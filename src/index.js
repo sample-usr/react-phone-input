@@ -373,7 +373,7 @@ class ReactPhoneInput extends React.Component {
   }
 
   handleKeydown(event) {
-    if(!this.state.showDropDown) {
+    if(!this.state.showDropDown || this.props.disabled) {
       return;
     }
 
@@ -504,6 +504,7 @@ class ReactPhoneInput extends React.Component {
           ref="numberInput"
           type="tel"
           className={inputClasses}
+          disabled={this.props.disabled}
         />
         <div ref="flagDropDownButton" className={flagViewClasses} onKeyDown={this.handleKeydown} >
           <div ref='selectedFlag'
@@ -577,7 +578,8 @@ ReactPhoneInput.propTypes = {
     onChange: React.PropTypes.func,
     onFocus: React.PropTypes.func,
     onClick: React.PropTypes.func,
-    onKeyDown: React.PropTypes.func
+    onKeyDown: React.PropTypes.func,
+    disabled: React.PropTypes.bool
 };
 
 export default ReactPhoneInput;
