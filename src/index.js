@@ -5,6 +5,7 @@ import { findIndex, head, tail } from 'lodash/array';
 import { debounce, memoize } from 'lodash/function';
 import { trim, startsWith } from 'lodash/string';
 import React from 'react';
+import PropTypes from 'prop-types';
 import countryData from './country_data.js';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
@@ -303,6 +304,10 @@ class ReactPhoneInput extends React.Component {
       if(this.props.onChange) {
         this.props.onChange(this.state.formattedNumber);
       }
+
+      if(this.props.onBlur) {
+        this.props.onBlur(this.state.formattedNumber);
+      }
     });
   }
 
@@ -331,6 +336,9 @@ class ReactPhoneInput extends React.Component {
         this._cursorToEnd();
         if(this.props.onChange) {
           this.props.onChange(formattedNumber);
+        }
+        if(this.props.onBlur) {
+          this.props.onBlur(formattedNumber);
         }
       });
     }
@@ -497,6 +505,7 @@ class ReactPhoneInput extends React.Component {
         <input
           placeholder="+1 (702) 123-4567"
           onChange={this.handleInput}
+          onBlur={this.handleInput}
           onClick={this.handleInputClick}
           onFocus={this.handleInputFocus}
           onKeyDown={this.handleInputKeyDown}
@@ -569,15 +578,16 @@ ReactPhoneInput.defaultProps = {
 };
 
 ReactPhoneInput.propTypes = {
-    value: React.PropTypes.string,
-    autoFormat: React.PropTypes.bool,
-    defaultCountry: React.PropTypes.string,
-    onlyCountries: React.PropTypes.arrayOf(React.PropTypes.string),
-    preferredCountries: React.PropTypes.arrayOf(React.PropTypes.string),
-    onChange: React.PropTypes.func,
-    onFocus: React.PropTypes.func,
-    onClick: React.PropTypes.func,
-    onKeyDown: React.PropTypes.func
+    value: PropTypes.string,
+    autoFormat: PropTypes.bool,
+    defaultCountry: PropTypes.string,
+    onlyCountries: PropTypes.arrayOf(PropTypes.string),
+    preferredCountries: PropTypes.arrayOf(PropTypes.string),
+    onChange: PropTypes.func,
+    onBlur: PropTypes.func,
+    onFocus: PropTypes.func,
+    onClick: PropTypes.func,
+    onKeyDown: PropTypes.func
 };
 
 export default ReactPhoneInput;
