@@ -5,6 +5,7 @@ import { findIndex, head, tail } from 'lodash/array';
 import { debounce, memoize } from 'lodash/function';
 import { trim, startsWith } from 'lodash/string';
 import React from 'react';
+import PropTypes from 'prop-types';
 import countryData from './country_data.js';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
@@ -86,6 +87,7 @@ class ReactPhoneInput extends React.Component {
     this.getElement = this.getElement.bind(this);
     this.handleFlagDropdownClick = this.handleFlagDropdownClick.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handleInputBlur = this.handleInputBlur.bind(this);
     this.handleInputClick = this.handleInputClick.bind(this);
     this.handleFlagItemClick = this.handleFlagItemClick.bind(this);
     this.handleInputFocus = this.handleInputFocus.bind(this);
@@ -245,6 +247,8 @@ class ReactPhoneInput extends React.Component {
   }
 
   handleInput(event) {
+
+    console.log('sdsd');
 
     let formattedNumber = '+', newSelectedCountry = this.state.selectedCountry,
 			freezeSelection = this.state.freezeSelection;
@@ -475,6 +479,12 @@ class ReactPhoneInput extends React.Component {
     );
   }
 
+  handleInputBlur() {
+    if(typeof this.props.onBlur === 'function') {
+      this.props.onBlur(this.state.formattedNumber, this.state.selectedCountry);
+    }
+  }
+
   render() {
     let arrowClasses = classNames({
       "arrow": true,
@@ -493,10 +503,11 @@ class ReactPhoneInput extends React.Component {
     let inputFlagClasses = `flag ${this.state.selectedCountry.iso2}`;
 
     return (
-      <div className="react-tel-input">
+      <div className={classNames('react-tel-input', this.props.classNames, this.props.className)}>
         <input
           placeholder="+1 (702) 123-4567"
           onChange={this.handleInput}
+          onBlur={this.handleInputBlur}
           onClick={this.handleInputClick}
           onFocus={this.handleInputFocus}
           onKeyDown={this.handleInputKeyDown}
@@ -569,15 +580,18 @@ ReactPhoneInput.defaultProps = {
 };
 
 ReactPhoneInput.propTypes = {
-    value: React.PropTypes.string,
-    autoFormat: React.PropTypes.bool,
-    defaultCountry: React.PropTypes.string,
-    onlyCountries: React.PropTypes.arrayOf(React.PropTypes.string),
-    preferredCountries: React.PropTypes.arrayOf(React.PropTypes.string),
-    onChange: React.PropTypes.func,
-    onFocus: React.PropTypes.func,
-    onClick: React.PropTypes.func,
-    onKeyDown: React.PropTypes.func
+    value: PropTypes.string,
+    autoFormat: PropTypes.bool,
+    defaultCountry: PropTypes.string,
+    onlyCountries: PropTypes.arrayOf(PropTypes.string),
+    preferredCountries: PropTypes.arrayOf(PropTypes.string),
+    onChange: PropTypes.func,
+    classNames: PropTypes.string,
+    className: PropTypes.string,
+    onBlur: PropTypes.func,
+    onFocus: PropTypes.func,
+    onClick: PropTypes.func,
+    onKeyDown: PropTypes.func
 };
 
 export default ReactPhoneInput;
