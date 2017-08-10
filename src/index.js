@@ -248,8 +248,6 @@ class ReactPhoneInput extends React.Component {
 
   handleInput(event) {
 
-    console.log('sdsd');
-
     let formattedNumber = '+', newSelectedCountry = this.state.selectedCountry,
 			freezeSelection = this.state.freezeSelection;
 

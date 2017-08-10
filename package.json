@@ -1,6 +1,6 @@
 {
   "name": "react-phone-input",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A react component to format phone numbers",
   "main": "dist/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/getsidekicker/react-phone-input.git"
+    "url": "https://github.com/razagill/react-phone-input.git"
   },
   "keywords": [
     "react",
@@ -18,12 +18,12 @@
     "format",
     "telephone"
   ],
-  "author": "Raza Gill <raza.gill@outlook.com> (hhttps://github.com/getsidekicker)",
+  "author": "Raza Gill <raza.gill@outlook.com> (http://github.com/razagill)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/getsidekicker/react-phone-input/issues"
+    "url": "https://github.com/razagill/react-phone-input/issues"
   },
-  "homepage": "https://github.com/getsidekicker/react-phone-input",
+  "homepage": "https://github.com/razagill/react-phone-input",
   "devDependencies": {
     "babel-core": "^6.9.1",
     "babel-loader": "^6.2.4",
@@ -46,7 +46,10 @@
   },
   "peerDependencies": {
     "lodash": "^4.11.1",
-    "react": "^0.14.8 || ^15.0.1",
-    "prop-types": "^15.5.10"
+    "peerDependencies": {
+      "lodash": "^4.11.1",
+      "react": "^15.6.1",
+      "prop-types": "^15.5.10"
+    }
   }
 }
