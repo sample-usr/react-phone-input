@@ -87,6 +87,7 @@ class ReactPhoneInput extends React.Component {
     this.getElement = this.getElement.bind(this);
     this.handleFlagDropdownClick = this.handleFlagDropdownClick.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handleInputBlur = this.handleInputBlur.bind(this);
     this.handleInputClick = this.handleInputClick.bind(this);
     this.handleFlagItemClick = this.handleFlagItemClick.bind(this);
     this.handleInputFocus = this.handleInputFocus.bind(this);
@@ -247,6 +248,8 @@ class ReactPhoneInput extends React.Component {
 
   handleInput(event) {
 
+    console.log('sdsd');
+
     let formattedNumber = '+', newSelectedCountry = this.state.selectedCountry,
 			freezeSelection = this.state.freezeSelection;
 
@@ -304,10 +307,6 @@ class ReactPhoneInput extends React.Component {
       if(this.props.onChange) {
         this.props.onChange(this.state.formattedNumber);
       }
-
-      if(this.props.onBlur) {
-        this.props.onBlur(this.state.formattedNumber);
-      }
     });
   }
 
@@ -336,9 +335,6 @@ class ReactPhoneInput extends React.Component {
         this._cursorToEnd();
         if(this.props.onChange) {
           this.props.onChange(formattedNumber);
-        }
-        if(this.props.onBlur) {
-          this.props.onBlur(formattedNumber);
         }
       });
     }
@@ -483,6 +479,12 @@ class ReactPhoneInput extends React.Component {
     );
   }
 
+  handleInputBlur() {
+    if(typeof this.props.onBlur === 'function') {
+      this.props.onBlur(this.state.formattedNumber, this.state.selectedCountry);
+    }
+  }
+
   render() {
     let arrowClasses = classNames({
       "arrow": true,
@@ -505,7 +507,7 @@ class ReactPhoneInput extends React.Component {
         <input
           placeholder="+1 (702) 123-4567"
           onChange={this.handleInput}
-          onBlur={this.handleInput}
+          onBlur={this.handleInputBlur}
           onClick={this.handleInputClick}
           onFocus={this.handleInputFocus}
           onKeyDown={this.handleInputKeyDown}
