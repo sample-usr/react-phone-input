@@ -248,8 +248,6 @@ class ReactPhoneInput extends React.Component {
 
   handleInput(event) {
 
-    console.log('sdsd');
-
     let formattedNumber = '+', newSelectedCountry = this.state.selectedCountry,
 			freezeSelection = this.state.freezeSelection;
 
@@ -503,7 +501,7 @@ class ReactPhoneInput extends React.Component {
     let inputFlagClasses = `flag ${this.state.selectedCountry.iso2}`;
 
     return (
-      <div className="react-tel-input">
+      <div className={classNames('react-tel-input', this.props.classNames, this.props.className)}>
         <input
           placeholder="+1 (702) 123-4567"
           onChange={this.handleInput}
@@ -586,6 +584,8 @@ ReactPhoneInput.propTypes = {
     onlyCountries: PropTypes.arrayOf(PropTypes.string),
     preferredCountries: PropTypes.arrayOf(PropTypes.string),
     onChange: PropTypes.func,
+    classNames: PropTypes.string,
+    className: PropTypes.string,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
     onClick: PropTypes.func,
