@@ -82,8 +82,6 @@ if (TARGET === 'dev') {
       })
     ]
   });
-
-  console.log(JSON.stringify(module.exports, undefined, 2));
 }
 
 
