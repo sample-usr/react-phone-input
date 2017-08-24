@@ -581,13 +581,3 @@ ReactPhoneInput.propTypes = {
 };
 
 export default ReactPhoneInput;
-
-if (__DEV__) {
-  const ReactDOM = require('react-dom');
-  ReactDOM.render(
-    <ReactPhoneInput defaultCountry='us' preferredCountries={['us', 'de']} excludeCountries={'in'}/>,
-    document.getElementById('content'));
-  ReactDOM.render(
-      <ReactPhoneInput defaultCountry='de' preferredCountries={['it']}/>,
-      document.getElementById('content'));
-}
