@@ -18,8 +18,7 @@ var common = {
     filename: 'index.js'
   },
   module: {
-    loaders: [
-      {
+    loaders: [{
         test: /\.(js|jsx)$/,
         loader: 'babel',
         include: path.resolve(ROOT_PATH, 'src')
@@ -41,15 +40,27 @@ var common = {
 if (TARGET === 'dev') {
   module.exports = merge(common, {
     devtool: 'eval',
-    // module: {
-    //   loaders: [
-    //     {
-    //       test: /\.jsx?$/,
-    //       loaders: ['react-hot', 'babel?stage=1'],
-    //       include: path.resolve(ROOT_PATH, 'src')
-    //     }
-    //   ]
-    // },
+    module: {
+      loaders: [{
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: [/node_modules/],
+        options: {
+          presets: [
+            'babel-preset-es2015',
+            'babel-preset-react'
+          ].map(require.resolve),
+        }
+      }]
+    },
+    entry: {
+      app: ['./example/index.js']
+    },
+    output: {
+      path: 'example',
+      filename: 'bundle.js'
+    },
+    // externals: [/node_modules/],
     devServer: {
       publicPath: 'http://localhost:8181/',
       port: '8181',
@@ -59,7 +70,7 @@ if (TARGET === 'dev') {
       hot: true,
       inline: true,
       progress: true,
-      contentBase: 'dist'
+      contentBase: 'example'
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
@@ -111,4 +122,3 @@ if (TARGET === 'build') {
     ]
   });
 }
-
