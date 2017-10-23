@@ -23,7 +23,7 @@ Your handler for the ``onChange`` event should expect a string as
 parameter, where the value is that of the entered phone number. For example:
 
 ```jsx
-function handeOnChange(value) {
+function handleOnChange(value) {
    this.setState({
       phone: value
    });
