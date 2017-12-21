@@ -465,10 +465,13 @@ class ReactPhoneInput extends React.Component {
     // let's insert a dashed line in between preffered countries and the rest
     countryDropDownList.splice(this.state.preferredCountries.length, 0, dashedLi);
 
-    const dropDownClasses = classNames({
-      'country-list': true,
-      'hide': !this.state.showDropDown
-    });
+    const dropDownClasses = classNames(
+      {
+        'country-list': true,
+        'hide': !this.state.showDropDown
+      },
+      this.props.classNames.countryList,
+    );
 
     return (
       <ul ref="flagDropdownList" className={dropDownClasses}>
@@ -488,20 +491,26 @@ class ReactPhoneInput extends React.Component {
       "arrow": true,
       "up": this.state.showDropDown
     });
-    let inputClasses = classNames({
-      "form-control": true,
-      "invalid-number": !this.props.isValid(this.state.formattedNumber.replace(/\D/g, ''))
-    });
+    let inputClasses = classNames(
+      {
+        "form-control": true,
+        "invalid-number": !this.props.isValid(this.state.formattedNumber.replace(/\D/g, ''))
+      },
+      this.props.classNames.input,
+    );
 
-    let flagViewClasses = classNames({
-      "flag-dropdown": true,
-      "open-dropdown": this.state.showDropDown
-    });
+    let flagViewClasses = classNames(
+      {
+        "flag-dropdown": true,
+        "open-dropdown": this.state.showDropDown
+      },
+      this.props.classNames.flagView,
+    );
 
     let inputFlagClasses = `flag ${this.state.selectedCountry.iso2}`;
 
     return (
-      <div className={classNames('react-tel-input', this.props.classNames, this.props.className)}>
+      <div className={classNames('react-tel-input', this.props.classNames.root, this.props.className)}>
         <input
           placeholder="+1 (702) 123-4567"
           onChange={this.handleInput}
@@ -517,7 +526,12 @@ class ReactPhoneInput extends React.Component {
         <div ref="flagDropDownButton" className={flagViewClasses} onKeyDown={this.handleKeydown} >
           <div ref='selectedFlag'
                onClick={this.handleFlagDropdownClick}
-               className='selected-flag'
+               className={
+                 classNames(
+                   'selected-flag',
+                   this.props.classNames.selectedFlag
+                 )
+               }
                title={`${this.state.selectedCountry.name}: + ${this.state.selectedCountry.dialCode}`}>
             <div className={inputFlagClasses}>
               <div className={arrowClasses}></div>
@@ -584,7 +598,7 @@ ReactPhoneInput.propTypes = {
     onlyCountries: PropTypes.arrayOf(PropTypes.string),
     preferredCountries: PropTypes.arrayOf(PropTypes.string),
     onChange: PropTypes.func,
-    classNames: PropTypes.string,
+    classNames: PropTypes.object,
     className: PropTypes.string,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
