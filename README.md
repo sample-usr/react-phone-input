@@ -15,7 +15,7 @@ npm install react-phone-input --save
 import ReactPhoneInput from 'react-phone-input';
 
 React.render(  
-  <ReactPhoneInput defaultCountry={'us'} onChange={handleOnChange)/>,
+  <ReactPhoneInput defaultCountry={'us'} onChange={handleOnChange}/>,
   document.getElementById('content'));
 ```
 
@@ -23,7 +23,7 @@ Your handler for the ``onChange`` event should expect a string as
 parameter, where the value is that of the entered phone number. For example:
 
 ```jsx
-function handeOnChange(value) {
+function handelOnChange(value) {
    this.setState({
       phone: value
    });
