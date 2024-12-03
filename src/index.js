@@ -252,7 +252,7 @@ class ReactPhoneInput extends React.Component {
 			freezeSelection = this.state.freezeSelection;
 
     //Does not exceed 16 digit phone number limit
-    if(event.target.value.replace(/\D/g, '').length > 16) {
+    if(event.target.value.replace(/\D/g, '').length > 18) {
       return;
     }
 
